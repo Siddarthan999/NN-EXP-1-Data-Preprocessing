@@ -37,8 +37,10 @@ Splitting the data into test and train
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
+
 # Load the dataset
 df = pd.read_csv("/content/drive/MyDrive/Neural Networks Dataset/Churn_Modelling.csv")
+
 # Basic information about the dataset
 print(df)
 print(df.isnull().sum())
