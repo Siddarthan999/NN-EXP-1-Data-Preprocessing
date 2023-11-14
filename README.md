@@ -68,10 +68,8 @@ y = y[X.index]  # Update y to match the rows kept in X
 
 # 5. Train-Test Split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
 # 6. Scaling Features
 min_max_scaler = MinMaxScaler()
-
 X_train_scaled = min_max_scaler.fit_transform(X_train)
 X_test_scaled = min_max_scaler.transform(X_test)
 
