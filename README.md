@@ -32,42 +32,35 @@ Splitting the data into test and train
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
-
 # Load the dataset
-df = pd.read_csv("/content/drive/MyDrive/Neural Networks Dataset/Churn_Modelling.csv")
+df = pd.read_csv("Churn_Modelling.csv")
 
 # Basic information about the dataset
 print(df)
 print(df.isnull().sum())
 print(df.duplicated())
 print(df.describe())
-
 # 1. Handling Missing Values
 df.dropna(inplace=True)
-
 # 2. Encoding Categorical Variables
 label_encoder = LabelEncoder()
 df['Geography'] = label_encoder.fit_transform(df['Geography'])
 df['Gender'] = label_encoder.fit_transform(df['Gender'])
-
 # 3. Splitting Data into Features and Target
 X = df.drop(['RowNumber', 'CustomerId', 'Surname', 'Exited'], axis=1)
 y = df['Exited']
-
 # 4. Outlier Detection and Removal using IQR method
 Q1 = X.quantile(0.25)
 Q3 = X.quantile(0.75)
 IQR = Q3 - Q1
 X = X[~((X < (Q1 - 1.5 * IQR)) | (X > (Q3 + 1.5 * IQR))).any(axis=1)]
 y = y[X.index]  # Update y to match the rows kept in X
-
 # 5. Train-Test Split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 # 6. Scaling Features
 min_max_scaler = MinMaxScaler()
 X_train_scaled = min_max_scaler.fit_transform(X_train)
 X_test_scaled = min_max_scaler.transform(X_test)
-
 # Information about the processed data
 print("Original Dataset Shape:", df.shape)
 print("Processed Dataset Shape:", X_train_scaled.shape, X_test_scaled.shape)
@@ -128,18 +121,7 @@ HasCrCard          0
 IsActiveMember     0
 EstimatedSalary    0
 Exited             0
-dtype: int64
-0       False
-1       False
-2       False
-3       False
-4       False
-        ...  
-9995    False
-9996    False
-9997    False
-9998    False
-9999    False
+
 Length: 10000, dtype: bool
          RowNumber    CustomerId   CreditScore           Age        Tenure  \
 count  10000.00000  1.000000e+04  10000.000000  10000.000000  10000.000000   
